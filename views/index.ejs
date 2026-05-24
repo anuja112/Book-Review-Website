@@ -1,0 +1,66 @@
+<%- include('partials/header.ejs'); -%>
+    <div class="container">
+        <a href="/add" class="add-btn">+</a>
+        <% books.forEach(book=> { %>
+            <div class="book-card">
+
+                <!-- Cover -->
+                <div class="book-cover">
+                    <img src="<%= book.cover_url %>" alt="cover">
+                </div>
+
+                <div class="book-info">
+
+                    <!-- VIEW MODE -->
+                    <div id="view-<%= book.id %>">
+
+                        <h2 class="book-title">
+                            <%= book.title %>
+                        </h2>
+                        <p class="book-author">by <%= book.author %>
+                        </p>
+                        <p class="book-rating">⭐ <%= book.rating %>/5</p>
+                        <p class="book-summary">
+                            <%= book.notes %>
+                        </p>
+
+                        <div class="actions">
+
+                            <!-- Edit button (no form submit here) -->
+                            <button type="button" class="edit-btn" onclick="editHandler('<%= book.id %>')">Edit</button>
+
+                            <!-- Delete -->
+                            <form action="/delete" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="<%= book.id %>">
+                                <button type="submit" class="delete-btn">Delete</button>
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <!-- EDIT MODE -->
+                    <form id="edit-<%= book.id %>" action="/edit" method="post" hidden>
+
+                        <input type="hidden" name="id" value="<%= book.id %>">
+
+                        <input type="text" name="title" value="<%= book.title %>">
+                        <input type="text" name="author" value="<%= book.author %>">
+                        <input type="number" name="rating" value="<%= book.rating %>">
+
+                        <textarea name="notes"><%= book.notes %></textarea>
+
+                        <div class="actions">
+                            <button type="submit" class="save-btn">Save</button>
+                            <button type="button" onclick="cancelEdit('<%= book.id %>')">Cancel</button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+            <% }) %>
+
+    </div>
+
+<%- include('partials/footer.ejs'); -%>

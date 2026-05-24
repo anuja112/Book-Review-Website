@@ -1,0 +1,17 @@
+</main>
+<footer>Made By Anuja © <%= new Date().getFullYear() %>
+</footer>
+<script>
+    function editHandler(id) {
+        document.getElementById("view-" + id).hidden = true;
+        document.getElementById("edit-" + id).hidden = false;
+    }
+
+    function cancelEdit(id) {
+        document.getElementById("edit-" + id).hidden = true;
+        document.getElementById("view-" + id).hidden = false;
+    }
+</script>
+</body>
+
+</html>
