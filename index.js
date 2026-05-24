@@ -13,8 +13,8 @@ app.set("view engine", "ejs");
 const db = new pg.Client({
     user: "postgres",
     host: "localhost",
-    database: "permalist",
-    password: "123456",
+    database: your database name,
+    password: your database password,
     port: 5432
 });
 
@@ -34,7 +34,7 @@ app.get("/add", (req, res) => {
 app.post("/add-book", async (req, res) => {
     const { title, author, rating, notes } = req.body;
     try {
-        // 1. Get ISBN from Open Library
+        
         const response = await axios.get(
             `https://openlibrary.org/search.json?title=${encodeURIComponent(title)}`
         );
@@ -45,7 +45,7 @@ app.post("/add-book", async (req, res) => {
             ? `https://covers.openlibrary.org/b/id/${coverId}-M.jpg`
             : "/assets/default.png";
 
-        // 3. Insert into DB
+        
         await db.query(
             "INSERT INTO books (title, author, rating, notes, cover_url) VALUES ($1,$2,$3,$4,$5)",
             [title, author, rating, notes, cover_url]
